@@ -64,7 +64,7 @@ export const AddReportForm: React.FC<AddReportFormProps> = ({
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(event);
+    if (onSubmit) onSubmit(event); // Check if onSubmit is defined
     window.location.reload(); // Refresh the page after submitting the form
   };
 
@@ -93,7 +93,7 @@ export const AddReportForm: React.FC<AddReportFormProps> = ({
             >
               <Input
                 type="text"
-                value={formatCurrency(Number(sale.price))}
+                value={formatCurrency(Number(sale.price))} // Ensure formatCurrency is used
                 readOnly
                 className="bg-gray-100 text-gray-600 cursor-not-allowed col-span-4"
               />

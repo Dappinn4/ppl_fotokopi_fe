@@ -80,7 +80,8 @@ const MetricCard = ({
 
 export default function Home() {
   const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [stats, setStats] = useState({
     total: 0,
@@ -89,16 +90,17 @@ export default function Home() {
   });
 
   const fetchInventory = useCallback(async () => {
-    setIsLoading(true);
+    setLoading(true);
+    setError(null);
     try {
-      // Provide a callback function to handle the fetched data
       await fetchInventoryData((data) => {
         setInventoryData(data);
-        setIsLoading(false);
+        setLoading(false);
       });
     } catch (error) {
       console.error("Failed to fetch inventory:", error);
-      setIsLoading(false);
+      setError("Failed to load inventory data");
+      setLoading(false);
     }
   }, []);
 
@@ -121,6 +123,7 @@ export default function Home() {
         });
       } catch (error) {
         console.error("Error fetching daily reports:", error);
+        setError("Failed to load daily reports");
       }
     };
 
@@ -150,6 +153,23 @@ export default function Home() {
       })),
     [inventoryData]
   );
+
+  // Render loading or error state if applicable
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-xl text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-xl text-red-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

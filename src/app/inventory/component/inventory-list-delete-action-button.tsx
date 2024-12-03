@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -29,7 +29,8 @@ export const InventoryListDeleteActionButtonInline: React.FC<
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [isMainDialogOpen, setIsMainDialogOpen] = useState(false);
 
-  const refreshData = async () => {
+  // Wrap refreshData in useCallback
+  const refreshData = useCallback(async () => {
     try {
       await fetchInventoryData((data) => {
         setInventoryItems(data); // update state with fetched data
@@ -48,7 +49,7 @@ export const InventoryListDeleteActionButtonInline: React.FC<
         description: "Tidak dapat mengambil data.",
       });
     }
-  };
+  }, [inventory_id, toast]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

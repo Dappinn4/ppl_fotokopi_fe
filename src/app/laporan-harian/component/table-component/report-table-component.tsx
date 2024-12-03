@@ -1,12 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import {
-  Package,
-  MoreHorizontal,
-  Trash2,
-  DollarSign,
-  Pencil,
-} from "lucide-react";
+import { Package, MoreHorizontal, Trash2, DollarSign } from "lucide-react";
 import {
   Table,
   TableBody,

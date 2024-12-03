@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { format } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -46,11 +46,6 @@ export default function DailyReportDataTable() {
   );
   const [editSheetOpen, setEditSheetOpen] = useState(false);
 
-  useEffect(() => {
-    loadReports();
-    loadInventoryData();
-  }, []);
-
   const loadReports = async () => {
     try {
       const reports = await fetchAllDailyReports();
@@ -63,7 +58,7 @@ export default function DailyReportDataTable() {
     }
   };
 
-  const loadInventoryData = async () => {
+  const loadInventoryData = useCallback(async () => {
     try {
       await fetchInventoryData((data) => setInventoryData(data));
     } catch {
@@ -73,7 +68,12 @@ export default function DailyReportDataTable() {
         description: "Unable to load inventory items.",
       });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    loadReports();
+    loadInventoryData();
+  }, [loadInventoryData]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -249,7 +249,6 @@ export default function DailyReportDataTable() {
         />
       </div>
 
-      {/* Edit Sheet */}
       <EditReportSheet
         open={editSheetOpen}
         onOpenChange={setEditSheetOpen}
