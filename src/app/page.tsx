@@ -23,7 +23,6 @@ import {
 } from "@/service/inventory/inventory-fetcher";
 import { fetchAllDailyReports } from "@/service/laporan/laporan-daily/laporan-harian-fetcher";
 
-
 const AnimatedNumber = ({ value }: { value: number }) => {
   const [displayValue, setDisplayValue] = useState(0);
 
@@ -60,7 +59,7 @@ const MetricCard = ({
 }: {
   title: string;
   value: string;
-  icon: any;
+  icon: React.ElementType;
   trend?: string;
 }) => (
   <Card className="flex-1 hover:scale-105 transition-all duration-300 hover:shadow-lg">

@@ -41,6 +41,7 @@ export const EditReportSheet: React.FC<EditReportSheetProps> = ({
   const [addDate, setAddDate] = useState<Date | null>(
     report ? new Date(report.date) : new Date()
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [reportToEdit, setReportToEdit] = useState<DailyReportsSummary | null>(
     null
   );

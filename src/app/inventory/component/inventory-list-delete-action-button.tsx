@@ -50,9 +50,10 @@ export const InventoryListDeleteActionButtonInline: React.FC<
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     refreshData(); // Fetch initial data
-  }, []);
+  }, [refreshData]);
 
   useEffect(() => {
     if (inventory_id !== null) {
